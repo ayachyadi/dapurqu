@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* Pindai semua folder kode agar kelas yang baru dipakai ikut dibuat */
+@source "../app";
+@source "../components";
+@source "../lib";
+
+/* Design system: Warm Culinary Modernism (dari referensi UI) */
+@theme {
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-primary-50: #fdf1ea;
+  --color-primary-100: #f8dccf;
+  --color-primary-200: #f4b89d;
+  --color-primary-300: #f09266;
+  --color-primary-400: #e46b33;
+  --color-primary-500: #c05522;
+  --color-primary-600: #964118;
+  --color-primary-700: #753110;
+  --color-primary-800: #522008;
+  --color-primary-900: #321103;
+  --color-brand: #e8590c;
+
+  --color-secondary-50: #eef9ec;
+  --color-secondary-100: #ddf3d8;
+  --color-secondary-200: #a9dfa2;
+  --color-secondary-300: #7abd75;
+  --color-secondary-400: #5fa15d;
+  --color-secondary-500: #468645;
+  --color-secondary-600: #2e6c30;
+  --color-secondary-700: #215222;
+
+  --color-bg: #f8f6f1;
+  --color-sunken: #f0eee9;
+  --color-sunken-2: #eae8e3;
+  --color-line: #e3e0d8;
+  --color-ink: #1b1c18;
+  --color-body: #5b4339;
+  --color-muted: #8a857c;
+  --color-danger: #ba1a1a;
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  overscroll-behavior-y: none;
+}
+
+button,
+a {
+  -webkit-touch-callout: none;
+}
+
+.pb-safe {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #eae8e3 25%, #f4f2ed 37%, #eae8e3 63%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+/* Dashboard admin: ukuran penting ditulis sebagai CSS biasa agar tidak bergantung pada pemindaian Tailwind */
+.adm-card {
+  padding: 1.25rem;
+  min-width: 0;
+}
+.adm-thumb {
+  display: block;
+  flex: none;
+  overflow: hidden;
+  border-radius: 0.6rem;
+  background: var(--color-sunken-2);
+}
+
+@keyframes splashbar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}

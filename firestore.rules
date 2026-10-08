@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // Admin = ada dokumen admins/{uid}. Dokumen ini hanya bisa dibuat lewat Firebase Console.
+    function isAdmin() {
+      return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    match /admins/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // Katalog resep bersama. Semua pengguna login hanya bisa membaca resep "published".
+    match /recipes/{id} {
+      allow read: if signedIn() && (resource.data.status == 'published' || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    match /config/{doc} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    // Data pribadi tiap pengguna (profil, simpanan, resep AI, API key).
+    match /users/{uid}/{document=**} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+    match /users/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+  }
+}
